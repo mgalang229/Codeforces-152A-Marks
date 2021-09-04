@@ -14,24 +14,24 @@ int main() {
 			cin >> a[i][j];
 		}
 	}
-	// find the smallest value (character in every column) and count the number 
-	// of students who got the smallest value (in this case, the highest grade)
-	int ans = 0;
+	// create a boolean array to mark the successful students
+	bool visited[n] = {false};
 	for (int i = 0; i < m; i++) {
-		char highest = '9';
-		for (int j = 0; j < n; j++) {
-			if (a[j][i] < highest) {
+		// find the highest grade of a particular subject and verify whether the i-th 
+		// student got this grade (if yes, then mark the i-th index using the boolean array)
+		int highest = a[0][i];
+		for (int j = 1; j < n; j++) {
+			if (a[j][i] > highest) {
 				highest = a[j][i];
 			}
 		}
-		int cnt = 0;
 		for (int j = 0; j < n; j++) {
 			if (a[j][i] == highest) {
-				cnt++;
+				visited[j] = true;
 			}
 		}
-		ans += (cnt == 1);
 	}
-	cout << ans << '\n';
+	// count the number of successful students
+	cout << count(visited, visited + n, true) << '\n';
 	return 0;
 }
